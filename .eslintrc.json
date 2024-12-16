@@ -1,7 +1,0 @@
-{
-  "rules": {
-    "testing-library/no-node-access": "off",
-    "testing-library/no-container": "off",
-    "no-node-access": "off"
-  }
-}

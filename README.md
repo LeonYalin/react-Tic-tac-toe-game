@@ -1,97 +1,50 @@
-# Shopping Cart Project
+# React + TypeScript + Vite
 
-This project is a web application that allows users to browse a list of products, add them to a shopping cart, and manage their selections. The application is built using TypeScript and React, and it provides a user-friendly interface for a seamless shopping experience.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-![Preview](public/preview.png)
+Currently, two official plugins are available:
 
-## Features
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-1. **Product Listing:**
+## Expanding the ESLint configuration
 
-   - The web page displays a list of products retrieved from a remote server.
-   - The products are presented in the form of a table for easy browsing.
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-2. **Sorting and Filtering:**
+- Configure the top-level `parserOptions` property like this:
 
-   - Users can sort the product list by name or price, in ascending or descending order.
-   - Products can be filtered by category, allowing users to focus on specific types of products.
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
-3. **Shopping Cart:**
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-   - Each product has an "Add to Cart" button that adds the product to the shopping cart.
-   - Once a product is added to the cart, it cannot be added again until it is removed.
-   - The shopping cart displays a table of added products with quantity adjustment buttons.
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
 
-4. **Quantity Adjustment:**
-
-   - In the shopping cart, each product has "+" and "-" buttons for users to increase or decrease the quantity.
-
-5. **Total Price Calculation:**
-
-   - The total price of all products in the cart is displayed at the bottom.
-   - Shipping costs are considered in the total price calculation.
-
-6. **Shipping Cost Rules:**
-
-   - If the total value is less than $20, the shipping cost is $7.
-   - If the total value is less than $40, the shipping cost is $5.
-   - If the total value is $40 or more, shipping is free.
-
-7. **Discount Coupons:**
-
-   - Users can apply discount coupons for additional savings.
-   - Supported coupon codes:
-     - `freeShipping!`: Free shipping regardless of the total cost.
-     - `APPL10`: 10% off all Apple products.
-     - `AUDIO15`: 15% off all Audio products.
-     - `ELEC25`: 25% off all Electronic products.
-
-8. **Discount Display:**
-   - The applied coupon and the total discount value are displayed.
-   - The total price after applying the discount is shown.
-
-## Technical Specifications
-
-- **Technology Stack:**
-
-  - TypeScript
-  - React
-  - Material UI
-  - Jest
-  - React Testing Library
-
-- **Testing:**
-
-  - The project includes unit tests for components and utility functions to ensure the code works as expected. The tests are implemented using Jest and React Testing Library. To run the tests, use the following command:
-
-  ```bash
-  npm test
-  ```
-
-## Getting Started
-
-To run the project locally, follow these steps:
-
-1. Clone the repository:
-
-   ```bash
-   git clone <repository-url>
-   ```
-
-2. Install dependencies:
-
-   ```bash
-   npm install
-   ```
-
-3. Start the development server:
-
-   ```bash
-   npm start
-   ```
-
-4. Open the application in your web browser:
-
-   ```
-   http://localhost:3000
-   ```
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
+```
